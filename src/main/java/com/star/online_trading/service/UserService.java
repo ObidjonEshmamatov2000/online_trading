@@ -1,7 +1,7 @@
 package com.star.online_trading.service;
 
 import com.star.online_trading.entity.user.UserEntity;
-import com.star.online_trading.exception.UserNotFoundException;
+import com.star.online_trading.exception.UserCustomException;
 import com.star.online_trading.model.receive.UserReceiveDTO;
 import com.star.online_trading.model.response.ApiResponse;
 import com.star.online_trading.repository.UserRepository;
@@ -27,10 +27,11 @@ public class UserService {
         return ResponseUtils.SUCCESS;
     }
 
-    private void checkUser(String username){
-        Optional<UserEntity> optionalUserEntity = userRepository.findByPhoneNumber(username);
+    private void checkUser(String phoneNumber){
+        Optional<UserEntity> byPhoneNumber = userRepository.findByPhoneNumber(phoneNumber);
 
-        if (optionalUserEntity.isPresent())
-            throw new UserNotFoundException(username + " user is exist");
+        if (byPhoneNumber.isPresent()) {
+            throw new UserCustomException(phoneNumber + " is already present");
+        }
     }
 }

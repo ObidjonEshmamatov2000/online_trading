@@ -10,7 +10,7 @@ import javax.validation.constraints.Size;
 @Data
 public class UserReceiveDTO {
 
-    @NotEmpty
+    @NotEmpty(message = "first name must not be null")
     @JsonProperty("first_name")
     private String firstName;
 
